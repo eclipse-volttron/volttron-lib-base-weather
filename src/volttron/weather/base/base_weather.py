@@ -33,7 +33,6 @@ from abc import abstractmethod
 from datetime import datetime, timedelta
 from functools import wraps
 
-from distlib.database import old_dist_class
 from gevent import get_hub
 from typing import TypedDict
 
@@ -181,7 +180,7 @@ class BaseWeatherAgent(Agent):
         if service_type == "history":
             if interval:
                 raise ValueError("History object does not utilize an interval.")
-        elif not isinstance(interval, datetime.timedelta):
+        elif not isinstance(interval, timedelta):
             raise ValueError("Interval must be a valid datetime timedelta object.")
         if service_type not in ("history", "current", "forecast"):
             raise ValueError("Invalid service type. It should be history, current, or forecast")
@@ -261,7 +260,7 @@ class BaseWeatherAgent(Agent):
         :param service_name: a function call name for an api feature to be updated
         :param interval: datetime timedelta object specifying the length of time between api updates
         """
-        if not isinstance(interval, datetime.timedelta):
+        if not isinstance(interval, timedelta):
             raise ValueError(
                 "interval must be a valid datetime timedelta object.")
         if service_name in self._api_services:
@@ -913,7 +912,7 @@ class BaseWeatherAgent(Agent):
     #     data = []
     #     service_name = "get_hourly_historical"
     #     start_datetime = datetime.datetime.combine(start_date, datetime.time())
-    #     end_datetime = datetime.datetime.combine(end_date, datetime.time()) + (datetime.timedelta(days=1))
+    #     end_datetime = datetime.datetime.combine(end_date, datetime.time()) + (timedelta(days=1))
     #     for location in locations:
     #         if not self.validate_location(service_name, location):
     #             raise ValueError("Invalid Location:{}".format(location))
@@ -938,7 +937,7 @@ class BaseWeatherAgent(Agent):
     #                 self.store_weather_records(service_name, storage_records)
     #             for record in records:
     #                 data.append(record)
-    #             current = current + datetime.timedelta(hours=1)
+    #             current = current + timedelta(hours=1)
     #     return data
 
     @abstractmethod
@@ -1283,7 +1282,7 @@ class WeatherCache:
     #     """
     #     start_timestamp = date_timestamp
     #     end_timestamp = date_timestamp + (
-    #                 datetime.timedelta(days=1) - datetime.timedelta(milliseconds=1))
+    #                 timedelta(days=1) - timedelta(milliseconds=1))
     #     if service_name not in self._api_services:
     #         raise ValueError(f"service {service_name} does not exist in the agent's services.")
     #
@@ -1459,17 +1458,17 @@ for method in [WeatherCache.get_current_data,
 
 def get_forecast_start_stop(request_time, quantity,  service_name):
     if service_name == "get_hourly_forecast":
-        forecast_start = request_time + datetime.timedelta(hours=1)
+        forecast_start = request_time + timedelta(hours=1)
         forecast_start = forecast_start.replace(minute=0, second=0, microsecond=0)
-        forecast_end = forecast_start + datetime.timedelta(hours=quantity)
+        forecast_end = forecast_start + timedelta(hours=quantity)
     elif service_name == "get_minutely_forecast":
-        forecast_start = request_time + datetime.timedelta(minutes=1)
+        forecast_start = request_time + timedelta(minutes=1)
         forecast_start = forecast_start.replace(second=0, microsecond=0)
-        forecast_end = forecast_start + datetime.timedelta(minutes=quantity)
+        forecast_end = forecast_start + timedelta(minutes=quantity)
     elif service_name == "get_daily_forecast":
-        forecast_start = request_time + datetime.timedelta(days=1)
+        forecast_start = request_time + timedelta(days=1)
         forecast_start = forecast_start.replace(hour=0, minute=0, second=0, microsecond=0)
-        forecast_end = forecast_start + datetime.timedelta(days=quantity)
+        forecast_end = forecast_start + timedelta(days=quantity)
     else:
         raise RuntimeError("Unsupported service length")
     return forecast_start, forecast_end

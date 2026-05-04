@@ -22,7 +22,7 @@
 # ===----------------------------------------------------------------------===
 # }}}
 
-from base_weather import BaseWeatherAgent
-from doc_inherit import doc_inherit
+from .base_weather import BaseWeatherAgent
+from .doc_inherit import doc_inherit
 
 __all__ = ['BaseWeatherAgent', 'doc_inherit']
