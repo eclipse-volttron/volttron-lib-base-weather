@@ -16,7 +16,7 @@ volttron-core = ">=2.0.0rc13"
 pint = ">=0.24,<0.25" # 0.17 in monolithic.
 
 [tool.poetry.group.dev.dependencies]
-# None yet
+pytest = ">=7.0.0"
 
 [tool.yapfignore]
 ignore_patterns = [
