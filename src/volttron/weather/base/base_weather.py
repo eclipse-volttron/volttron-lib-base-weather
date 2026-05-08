@@ -829,7 +829,7 @@ class BaseWeatherAgent(Agent):
             if not generation_time:
                 # in case api does not return details on when this
                 # forecast data was generated
-                generation_time = datetime.now(datetime.UTC)
+                generation_time = get_aware_utc_now()
             else:
                 generation_time, old_tz = process_timestamp(generation_time)
             if self.point_name_mapping:
