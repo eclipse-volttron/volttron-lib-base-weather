@@ -1014,6 +1014,8 @@ class BaseWeatherAgent(Agent):
                 self.vip.health.set_status(STATUS_BAD, "Weather agent cache is full")
                 status = Status.from_json(self.vip.health.get_status_json())
                 self.vip.health.send_alert(CACHE_FULL, status)
+            else:
+                self.vip.health.set_status(STATUS_GOOD)
         except Exception as error:
             err_msg = "Weather agent failed to write to cache"
             _log.error(f"{err_msg}. Exception:{error}")
