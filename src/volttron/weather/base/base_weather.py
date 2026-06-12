@@ -1311,7 +1311,7 @@ class WeatherCache:
         if request_type == "forecast":
             query = f"INSERT INTO {service_name} (LOCATION, GENERATION_TIME, FORECAST_TIME, POINTS) VALUES (?, ?, ?, ?)"
         else:
-            query = "INSERT INTO {service_name} (LOCATION, OBSERVATION_TIME, POINTS) VALUES (?, ?, ?)"
+            query = f"INSERT INTO {service_name} (LOCATION, OBSERVATION_TIME, POINTS) VALUES (?, ?, ?)"
         _log.debug(query)
 
         if request_type == "current":
