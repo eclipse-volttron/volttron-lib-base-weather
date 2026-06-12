@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "volttron-lib-base-weather"
+version = "2.0.0rc0"
+description = "A base library with extension points to collect weather data for the VOLTTRON platform."
+authors = ["VOLTTRON Team <volttron@pnnl.gov>"]
+license = "Apache License 2.0"
+readme = "README.md"
+repository = "https://github.com/eclipse-volttron/volttron-lib-base-weather"
+homepage = "https://github.com/eclipse-volttron/volttron-lib-base-weather"
+keywords = []
+packages = [ { include = "volttron", from = "src" }]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+volttron-core = ">=2.0.0rc13"
+pint = ">=0.24,<0.25" # 0.17 in monolithic.
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=7.0.0"
+
+[tool.yapfignore]
+ignore_patterns = [
+    ".venv/**",
+    ".pytest_cache/**",
+    "dist/**",
+    "docs/**"
+]
+
+[tool.yapf]
+based_on_style = "pep8"
+spaces_before_comment = 4
+column_limit = 99
+split_before_logical_operator = true
+
+[build-system]
+requires = ["poetry-core>=2.0.0"]
+build-backend = "poetry.core.masonry.api"
+
